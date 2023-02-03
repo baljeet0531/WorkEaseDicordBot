@@ -5,7 +5,7 @@ import discord
 
 load_dotenv()
 
-bot = commands.Bot(command_prefix = "!", intents = discord.Intents.all())
+bot = commands.Bot(command_prefix = "/", intents = discord.Intents.all())
 
 class Config:
     BOT_TOKEN = os.environ.get("BOT_TOKEN", "")
