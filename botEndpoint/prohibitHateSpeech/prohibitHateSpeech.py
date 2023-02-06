@@ -5,14 +5,12 @@ from config import bot
 import discord
 import re
 
-hate_word = {"爛", "幹", "糙", "媽的", "幹*娘", "腦殘"}
-
 # Overriding the default provided on_message forbids any extra commands from running.
 @bot.event
-async def on_message(message):
+async def on_message(message : discord.message.Message):
     
-    if message:
-        hatter = [True for hw in hate_word if re.search(re.escape(hw), message.content)]
+    if message and message.author.id != bot.user.id :
+        hatter = [True for hw in Config.HATE_WORD if re.search(re.escape(hw), message.content)]
         if any(hatter):
             await message.channel.send("請您注意言論, 禁止使用不雅字詞")
 
