@@ -3,6 +3,8 @@ from config import Config, bot
 from botEndpoint import *
 from model import User_info
 from db import get_session
+# from loguru import logger
+from botEndpoint.scheduleRemind.scheduleRemind import schedule_remind
 
 @bot.event
 async def on_ready():
@@ -12,8 +14,11 @@ async def on_ready():
     except Exception as e:
         print(e)
 
+    # emoji = "<:zero_:1072502300947513415>"
     # channel = bot.get_channel(Config.CHANNEL_ID)
-    # await channel.send("Hola~ Bot is online now!!")
+    # await channel.send(f"Hola {emoji}Bot is online now!!")
+
+    schedule_remind.start()
 
 # bot.run(Config.BOT_TOKEN)
 
