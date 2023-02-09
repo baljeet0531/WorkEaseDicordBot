@@ -14,3 +14,5 @@ class Config:
     DATABASE_URL = os.environ.get("DATABASE_URL", "")
     HATE_WORD = os.environ.get("HATE_WORD", [])
     DIRECTOR_ID = os.environ.get("DIRECTOR_ID", 0)
+    OPENAI_API_KEY=os.environ.get("OPENAI_API_KEY","")
+    OPENAI_ORG=os.environ.get("OPENAI_ORG","")

@@ -11,6 +11,13 @@ numpy = "*"
 alembic = "*"
 python-dotenv = "*"
 psycopg2 = "*"
+google = "*"
+google-api-python-client = "*"
+google-auth-oauthlib = "*"
+scikit-learn = "*"
+scipy = "*"
+openai = "*"
+asyncio = "*"
 
 [dev-packages]
 

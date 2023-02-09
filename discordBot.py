@@ -3,14 +3,23 @@ from config import Config, bot
 from botEndpoint import *
 from model import User_info
 from db import get_session
-# from loguru import logger
+import asyncio
+import discord 
+from discord import ui,app_commands
+from discord.ext import commands
+from datetime import datetime
+import openai
+from loguru import logger
 from botEndpoint.scheduleRemind.scheduleRemind import schedule_remind
 
 @bot.event
 async def on_ready():
+    print(">> Bot is online <<")
+    await bot.wait_until_ready()
     try:
         synced = await bot.tree.sync()
         print(f"Synced {len(synced)} command(s)")
+        print(f"we have logged in as {bot.user}.")
     except Exception as e:
         print(e)
 
@@ -20,28 +29,12 @@ async def on_ready():
 
     schedule_remind.start()
 
-# bot.run(Config.BOT_TOKEN)
-
-
-
-
-#######################
-import asyncio
-import discord 
-from discord import ui,app_commands
-from discord.ext import commands
-from datetime import datetime
-import openai
-
-openai.organization = "org-xBzopJZse0byAj5mLK6mU3HZ"
-openai.api_key = "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"
-
-botId = 1070261982973927444
+openai.organization = Config.OPENAI_ORG
+openai.api_key = Config.OPENAI_API_KEY
 
 intents = discord.Intents.default()
 intents.message_content = True
 bot = commands.Bot(command_prefix="!",intents=intents)
-# tree = app_commands.CommandTree(bot)
 
 class SummaryModal(ui.Modal, title='Summary'):
     name = ui.TextInput(label='Title',style=discord.TextStyle.short)
@@ -69,13 +62,7 @@ class SummaryModal(ui.Modal, title='Summary'):
         bot_message = self.answer
         await interaction.response.send_message(bot_message)
 
-@bot.event
-async def on_ready():
-    print(">> Bot is online <<")
-    await bot.wait_until_ready()
-    synced_commands = await bot.tree.sync()
-    print(f"Synced {len(synced_commands)} command(s)")
-    print(f"we have logged in as {bot.user}.")
+
 
 # @bot.listen()
 # async def on_message(message:discord.Message):
@@ -108,11 +95,9 @@ async def on_ready():
 
 # @tree.command(name="summary",description="整理重點(會議記錄、對話紀錄...等)")
 # async def summary(interaction: discord.Interaction):
-#     # await interaction.response.defer(ephemeral=True)
-#     # await interaction.followup.send(SummaryModal())
 #     await interaction.response.send_modal(SummaryModal())
 
-@bot.tree.command(name="summary",description="整理重點(會議記錄、對話紀錄...等)")
+@bot.tree.command(name="summary",description="hello")
 async def summary(interaction: discord.Interaction):
     print(interaction.channel_id)
     channel = bot.get_channel(interaction.channel_id)
@@ -142,37 +127,13 @@ async def summary(interaction: discord.Interaction):
     # await interaction.followup.send(embed=embed)
     await interaction.followup.send(bot_message)
 
-
-    # await interaction.response.send_message(messages)
-    # await interaction.response.defer(ephemeral=True)
-    # await interaction.followup.send(SummaryModal())
-    # await interaction.response.send_modal(SummaryModal())
-
 @bot.tree.command(name="hello",description="整理重點(會議記錄、對話紀錄...等)")
 async def hello(interaction: discord.Interaction):
     await interaction.response.send_message("hello")
 
 
-@bot.command()
-async def response(ctx:commands.Context, input:str):
-    await ctx.defer(ephemeral=True)
-    print("Submitting")
-    response = await openai.Completion.acreate(
-        model="text-davinci-003",
-        prompt=f"{input}",
-        temperature=0.9,
-        max_tokens=64,
-        # top_p=1.0,
-        # frequency_penalty=0.0,
-        # presence_penalty=0.0
-    )
-    response_dict = response.get("choices")
-    if response_dict and len(response_dict)>0:
-        bot_message = response_dict[0]["text"]
-    # embed = discord.Embed(title=self.title,description=f"{bot_message}",timestamp=datetime.now(),color=discord.Colour.blue())
-    # embed.set_author(name=interaction.user,icon_url=interaction.user.avatar)
-    # await interaction.followup.send(embed=embed)
-    await ctx.send(bot_message)
+# @bot.command()
+# async def response(ctx:commands.Context, input:str):
+#     await ctx.send("response")
 
-# bot.run('MTA3MDI2MTk4Mjk3MzkyNzQ0NA.G0st_X.u9sI2gzoF_JeTebBVZFloqYy4KeLXJGMACFRW8')
 bot.run(Config.BOT_TOKEN)
