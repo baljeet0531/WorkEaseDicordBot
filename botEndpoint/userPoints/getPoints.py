@@ -90,7 +90,6 @@ async def get_points(user_name : str, event: str, start : datetime, end : dateti
     session = get_session()
     user = session.query(User_info).filter(User_info.name == user_name).first()
 
-
     if user:
         user.points += point
 
@@ -99,4 +98,6 @@ async def get_points(user_name : str, event: str, start : datetime, end : dateti
         except Exception as e:
             session.rollback()
             logger.error(e)
+    
+    return point
 
