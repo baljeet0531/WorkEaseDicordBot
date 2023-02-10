@@ -9,8 +9,6 @@ from botEndpoint.utils import calendar_setting
 from datetime import datetime, timedelta
 import re
 
-
-
 @tasks.loop(seconds = 20)
 async def schedule_remind():
 
@@ -59,7 +57,7 @@ async def schedule_remind():
                 earliness = timedelta(hours = 12)
 
                 logger.warning(event)
-                if True:#datetime.now() >= start_time - earliness:
+                if datetime.now() >= start_time - earliness:
                     
                     title_msg = f"行程通知提醒: {event['summary']}" if "summary" in event else "行程通知提醒:"
                     event_msg = f"您在 12 小時過後, 已安排 **{event['summary']}**." if "summary" in event else f"您在 12 小時過後, 已安排一項活動."
