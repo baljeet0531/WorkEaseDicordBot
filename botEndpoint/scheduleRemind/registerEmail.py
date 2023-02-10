@@ -7,7 +7,7 @@ from botEndpoint.utils import get_points_message
 import numpy as np
 import re
 
-@bot.tree.command(name = "register email")
+@bot.tree.command(name = "register_email")
 async def regsiter_email(interaction : discord.Interaction, *, email : str):
     
     session = get_session()
