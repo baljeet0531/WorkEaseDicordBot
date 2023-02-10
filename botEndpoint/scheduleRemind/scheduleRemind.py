@@ -1,5 +1,5 @@
 import discord
-from config import bot
+from config import bot, Config
 from loguru import logger
 from db import get_session
 from model import User_info, Emoji_info
@@ -9,7 +9,7 @@ from botEndpoint.utils import calendar_setting
 from datetime import datetime, timedelta
 import re
 
-@tasks.loop(seconds = 20)
+@tasks.loop(seconds = Config.SCHEDULE_TIME)
 async def schedule_remind():
 
     session = get_session()
@@ -57,7 +57,7 @@ async def schedule_remind():
                 earliness = timedelta(hours = 12)
 
                 logger.warning(event)
-                if datetime.now() >= start_time - earliness:
+                if True:#datetime.now() >= start_time - earliness and datetime.now() <= start_time - earliness + timedelta(seconds = Config.SCHEDULE_TIME):
                     
                     title_msg = f"行程通知提醒: {event['summary']}" if "summary" in event else "行程通知提醒:"
                     event_msg = f"您在 12 小時過後, 已安排 **{event['summary']}**." if "summary" in event else f"您在 12 小時過後, 已安排一項活動."
@@ -71,8 +71,12 @@ async def schedule_remind():
                     embed.add_field(name = ":cityscape:地點:", value = location_msg, inline = False)
                     embed.add_field(name = "溫馨提醒:", value = warm_msg, inline = False)
 
-                    send_user = bot.get_user(int(user.user_id))
-                    await send_user.send(embed = embed)
+                    if len(str(user.user_id)) == 18:
+                        send_user = bot.get_user(user.user_id)
+                        await send_user.send(embed = embed)
+                    else:
+                        channel = bot.get_channel(user.user_id)
+                        await channel.send(embed = embed)
 
                     logger.info(f"Start time : {start_time}")
                     logger.info(f"End time : {end_time}")
