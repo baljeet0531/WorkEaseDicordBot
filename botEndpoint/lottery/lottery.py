@@ -14,7 +14,7 @@ import math
 @bot.tree.command(name = "lottery")
 async def lottery(interaction : discord.Interaction):
 
-    if not interaction.user.get_role(Config.DIRECTOR_ID):
+    if not interaction.user.get_role(int(Config.DIRECTOR_ID)):
         await interaction.response.send_message(f"您沒有權限使用這個功能", ephemeral = True)
 
     session = get_session()
@@ -101,8 +101,8 @@ async def lottery(interaction : discord.Interaction):
     man_points = group_points[lucky_number]
 
 
-    for k in range(10):
-        print(f"Count {k} = {black_box.count(k)}")
+    # for k in range(10):
+    #     print(f"Count {k} = {list(black_box).count(k)}")
         
     logger.info(f"Choosen group : {lucky_group}")
     logger.info(f"Lucky man name : {lucky_man[0]}")
