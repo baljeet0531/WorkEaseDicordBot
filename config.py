@@ -21,3 +21,5 @@ class Config:
     END_TIME = [0, 1]
     AM_PM = "pm"
     TODAY_ORDERS = {'TodayOrder': []} 
+    OPENAI_API_KEY=os.environ.get("OPENAI_API_KEY","")
+    OPENAI_ORG=os.environ.get("OPENAI_ORG","")
