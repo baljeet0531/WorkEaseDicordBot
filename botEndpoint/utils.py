@@ -1,21 +1,15 @@
-from discord.ext import commands, tasks
-from dataclasses import dataclass
-import datetime
 import discord
-from discord import app_commands
-from config import Config
-from config import bot
-from datetime import datetime, timedelta
-from loguru import logger
 from db import get_session
-from model import User_info, Emoji_info
-import numpy as np
+from model import Emoji_info
 from google.auth.transport.requests import Request
 from google.oauth2.credentials import Credentials
 from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 import os
+
+
+#---------------日曆 utils---------------------#
 
 SCOPES = ['https://www.googleapis.com/auth/calendar.readonly', 'https://www.googleapis.com/auth/calendar']
 service = None
@@ -50,13 +44,14 @@ async def calendar_setting():
     
     return service
 
+#---------------點數 utils---------------------#
 async def get_points_message(points : int, query : bool):
 
     session = get_session()
 
     emoji_number = ""
     for char in str(points):
-        emoji = session.query(Emoji_info).filter(Emoji_info.emoji_name == int(char)).first()
+        emoji = session.query(Emoji_info).filter(Emoji_info.emoji_name == char).first()
         emoji_number += f"<:{emoji.emoji_eng}:{emoji.emoji_id}>"
 
     if query: 
@@ -64,3 +59,22 @@ async def get_points_message(points : int, query : bool):
 
     else:
         return f"您醬獲得了 {points} :coin:\n{emoji_number}"
+
+
+#---------------點飲料 utils---------------------#
+
+async def update_data(users, user, item):
+    if 'TodayOrder' not in users:
+        users['TodayOrder'] = []
+    else:
+        pass
+
+    return users
+
+async def add_content(users, user, name, item, sugar, ice):
+    print(name, item, sugar, ice)
+    nameS = name
+    users['TodayOrder'].append(
+        {"Name": nameS, "item": item, "Sugar": sugar, "ice": ice})
+    
+    return users
