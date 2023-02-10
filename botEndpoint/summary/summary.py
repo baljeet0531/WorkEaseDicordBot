@@ -80,7 +80,7 @@ async def summary(interaction: discord.Interaction):
     await interaction.response.defer()
     print("Submitting")
     prompt = f"以下是聊天紀錄的陣列，包含使用者名稱與訊息內容，請幫我整理以下重點: {messages}"
-    max_tokens = 4097 - len(prompt)
+    max_tokens = 4000 - 3*len(prompt)
     response = await openai.Completion.acreate(
         model="text-davinci-003",
         prompt=prompt,
