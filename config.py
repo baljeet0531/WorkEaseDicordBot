@@ -14,3 +14,10 @@ class Config:
     DATABASE_URL = os.environ.get("DATABASE_URL", "")
     HATE_WORD = os.environ.get("HATE_WORD", [])
     DIRECTOR_ID = os.environ.get("DIRECTOR_ID", 0)
+    SUGAR = ["正常甜","不要太甜","少糖","半糖","微糖","無糖"]
+    ICE = ["正常冰","少冰","微冰","去冰","常溫","熱"]
+    BRAND = "五十嵐"
+    START_TIME = [0, 0]
+    END_TIME = [0, 1]
+    AM_PM = "pm"
+    TODAY_ORDERS = {'TodayOrder': []} 
