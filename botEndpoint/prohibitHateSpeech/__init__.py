@@ -1,1 +1,0 @@
-from .prohibitHateSpeech import on_message
