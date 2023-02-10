@@ -25,7 +25,7 @@ async def start(interaction : discord.Interaction):
     human_readable_time = interaction.created_at.strftime("%H:%M:%S")
 
     break_reminder.start()
-    await interaction.response.send_message(f"New session started at {a} {human_readable_time}")
+    await interaction.response.send_message(f"New session started at {human_readable_time}")
 
 @bot.tree.command(name = "end")
 async def end(interaction : discord.Interaction):
