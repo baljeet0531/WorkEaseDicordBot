@@ -73,14 +73,15 @@ async def summary(interaction: discord.Interaction):
     print(interaction.channel_id)
     channel = bot.get_channel(interaction.channel_id)
     print(channel)
-    messages = [f"{message.author.name}:{message.content}" async for message in channel.history(limit=10)]
+    messages = [f"{message.author.name}:{message.content}" async for message in channel.history(limit=20)]
     messages = messages[::-1]
     print(messages)
 
     await interaction.response.defer()
     print("Submitting")
     prompt = f"以下是聊天紀錄的陣列，包含使用者名稱與訊息內容，請幫我整理以下重點: {messages}"
-    max_tokens = 4097 - len(prompt)
+    # max_tokens = 4097 - len(prompt)
+    max_tokens = 2000
     response = await openai.Completion.acreate(
         model="text-davinci-003",
         prompt=prompt,
