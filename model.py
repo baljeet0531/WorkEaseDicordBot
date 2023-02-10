@@ -10,6 +10,8 @@ class User_info(BASE):
     user_id = Column(BIGINT, nullable = False, primary_key = True, unique = True)
     points = Column(Integer, nullable = False)
     email = Column(VARCHAR, nullable = True)
+    title = Column(VARCHAR , nullable = True)
+    department = Column(VARCHAR, nullable = True)
 
 
 class Emoji_info(BASE):
@@ -34,3 +36,61 @@ class Menu(BASE):
     item = Column(VARCHAR, nullable=False)
     price_small = Column(Integer, nullable=False)
     price_large = Column(Integer, nullable=False)
+
+class Time_Sheet(BASE):
+
+    __tablename__ = 'time_sheet'
+
+    user_id = Column(VARCHAR, nullable=False, primary_key=True)
+    user = Column(VARCHAR, nullable=False)
+    department = Column(VARCHAR, nullable=False)
+    datetime = Column(VARCHAR, nullable=False)
+    project = Column(VARCHAR, nullable=False, primary_key=True)
+    hours = Column(VARCHAR, nullable=False)
+
+
+class Overtime_Sheet(BASE):
+
+    __tablename__ = 'overtime_sheet'
+
+    user_id = Column(VARCHAR, nullable=False, primary_key=True)
+    user = Column(VARCHAR, nullable=False)
+    project = Column(VARCHAR, nullable=False, primary_key=True)
+    date = Column(VARCHAR, nullable=False)
+    department = Column(VARCHAR, nullable=False)
+    hours = Column(VARCHAR, nullable=False)
+    status = Column(BOOLEAN)
+
+
+class Leave_Sheet(BASE):
+
+    __tablename__ = 'leave_sheet'
+
+    user_id = Column(VARCHAR, nullable=False, primary_key=True)
+    user = Column(VARCHAR, nullable=False)
+    reason = Column(VARCHAR, nullable=False)
+    department = Column(VARCHAR, nullable=False)
+    apply_date = Column(VARCHAR, nullable=False)
+    leave_date = Column(VARCHAR, nullable=False, primary_key=True)
+    hours = Column(VARCHAR, nullable=False)
+    status = Column(BOOLEAN)
+
+
+class Profile(BASE):
+
+    __tablename__ = 'user_profile'
+
+    user_id = Column(VARCHAR, nullable=False, primary_key=True)
+    user = Column(VARCHAR, nullable=False)
+    title = Column(VARCHAR, nullable=False)
+    department = Column(VARCHAR, nullable=False)
+
+class MALL(BASE):
+
+     __tablename__ = 'mall'
+
+     commodity = Column(VARCHAR, nullable=False, primary_key=True)
+     points = Column(VARCHAR, nullable=False)
+     amount = Column(VARCHAR, nullable=False)
+     image_url = Column(VARCHAR, nullable=False)
+     description = Column(VARCHAR, nullable=False)
