@@ -16,7 +16,8 @@ async def lottery(interaction : discord.Interaction):
 
     if not interaction.user.get_role(int(Config.DIRECTOR_ID)):
         await interaction.response.send_message(f"您沒有權限使用這個功能", ephemeral = True)
-
+        return
+        
     session = get_session()
     matching_level = 10
 
