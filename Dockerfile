@@ -10,7 +10,7 @@ COPY ./Pipfile /Pipfile
 COPY ./Pipfile.lock /Pipfile.lock
 COPY ./config.py /config.py
 COPY ./db.py /db.py
-COPY ./discordBot.py /discordBot.py
+COPY ./main.py /main.py
 COPY ./model.py /model.py
 
 # Install dependencies
@@ -19,4 +19,4 @@ RUN pip3 install pipenv
 RUN pipenv --python 3.10
 RUN pipenv install
 
-CMD ["pipenv", "run", "python3", "discordBot.py"]
+CMD ["pipenv", "run", "python3", "main.py"]
