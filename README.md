@@ -26,7 +26,7 @@ An example of typical input would be something like this:
 ## Installation
 
 ```Python3
-git clone https://github.com/hongpei100/NetDB_DiscordBot.git
+git clone https://github.com/baljeet0531/WorkEaseDiscordBot.git
 ```
 ```
 docker compsoe up
